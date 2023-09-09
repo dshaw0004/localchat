@@ -1,6 +1,15 @@
 import { useEffect, useState } from "react";
 import io, { Socket } from "socket.io-client";
 
+function connectToSocket(roomCode: string) {
+	const newSocket = io("https://wschatup.dsx4.repl.co", {
+		query: {
+			roomid: roomCode,
+		},
+	});
+	return newSocket;
+}
+
 export function useSocket() {
 	const [socket, setSocket] = useState<Socket>(io(""));
 
@@ -17,16 +26,12 @@ export function useSocket() {
 					minLat: int((latitude - int(latitude)) * 60),
 					minLong: int((longitude - int(longitude)) * 60),
 				};
-				const roomID = `${values.degLat}d${values.minLat}m&&${values.degLong}d${values.minLong}m`;
-				const newSocket = io("https://wschatup.dsx4.repl.co", {
-					query: {
-						roomid: roomID,
-					},
-				});
-				setSocket(newSocket);
+				const roomCode: string = `${values.degLat}d${values.minLat}m&&${values.degLong}d${values.minLong}m`;
+				setSocket(connectToSocket(roomCode));
 			},
-			(er) => {
-				console.log(er);
+			() => {
+				const roomCode: string = "420d420m&&420d420m";
+				setSocket(connectToSocket(roomCode));
 			}
 		);
 
