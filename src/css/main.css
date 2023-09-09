@@ -1,0 +1,150 @@
+main.chatPage {
+  display: grid;
+  grid-template-columns: 2fr 4fr;
+  height: 100vh;
+  height: 100dvh;
+  width: 100vw;
+}
+
+main.chatPage > section {
+  outline: 1px solid grey;
+  height: 100%;
+  /* position: relative; */
+}
+main.chatPage > section .aboutUs {
+  text-align: center;
+}
+main.chatPage > section .aboutUs h1 {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-size: clamp(1rem, 10vw, 5rem);
+}
+
+main.chatPage > section.chatsSection {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.messages-display {
+  text-align: center;
+  padding-block: 1ch;
+  border-bottom: 1px solid currentColor;
+}
+
+main.chatPage > section.chatsSection > div.messagesOutput {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1ch;
+  padding-block: 1em;
+}
+
+main.chatPage > section.chatsSection > form.inputMessageForChat {
+  width: 100%;
+  overflow-y: auto;
+  display: flex;
+}
+:is(main.chatPage > section.chatsSection > form.inputMessageForChat:hover, main.chatPage > section.chatsSection > form.inputMessageForChat:focus, main.chatPage > section.chatsSection > form.inputMessageForChat:focus-within) .MessageInput {
+  background-color: #ccffff;
+}
+
+main.chatPage > section.chatsSection > form.inputMessageForChat .MessageInput {
+  flex-grow: 1;
+  border-radius: 1em 0 0 1em;
+  background-color: #aaffff;
+  padding-inline: 2ch;
+}
+
+main.chatPage > section.chatsSection > form.inputMessageForChat button {
+  border-radius: 0 1em 1em 0;
+  max-width: 100px;
+  min-width: 40px;
+  background-color: #aaffff;
+}
+
+.messages {
+  border-radius: 1em;
+  padding: 0.5ch 2ch;
+  margin-inline: 2ch;
+  font-size: larger;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.sentMessage {
+  background-color: #00d000;
+  color: white;
+}
+
+.receivedMessage {
+  background-color: #0000d0;
+  color: white;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 0.5em 1em;
+  align-items: center;
+  font-size: x-large;
+  background-color: #f1f3ff;
+}
+
+.additional-info {
+  position: relative;
+}
+.additional-info .userInfo > div.profilePic-container {
+  width: min(90%, 350px);
+  margin-inline: auto;
+}
+.additional-info .userInfo > div.profilePic-container div.profile-picture {
+  display: grid;
+  width: -moz-fit-content;
+  width: fit-content;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-inline: auto;
+  grid-template-columns: repeat(2, 4em);
+  grid-template-rows: repeat(2, 4em);
+  justify-content: center;
+  border: 2px solid black;
+}
+.additional-info .userInfo > div.profilePic-container div.profile-picture:hover {
+  border-radius: unset;
+}
+.additional-info .userInfo > div.profilePic-container div.profile-picture div.profile-picture-top-left,
+.additional-info .userInfo > div.profilePic-container div.profile-picture div.profile-picture-top-right,
+.additional-info .userInfo > div.profilePic-container div.profile-picture div.profile-picture-bottom-left,
+.additional-info .userInfo > div.profilePic-container div.profile-picture div.profile-picture-bottom-right {
+  width: -moz-fit-content;
+  width: fit-content;
+  display: grid;
+  grid-template-columns: repeat(8, 0.5em);
+}
+.additional-info .userInfo > div.profilePic-container div.profile-picture div.profile-picture-top-right,
+.additional-info .userInfo > div.profilePic-container div.profile-picture div.profile-picture-bottom-right {
+  transform: rotate(180deg);
+}
+.additional-info .userInfo > div.profilePic-container div.profile-picture span.profile-pic-bits {
+  display: inline-block;
+  width: 0.5em;
+  height: 0.5em;
+  outline: 1px solid black;
+}
+.additional-info .userInfo > div.profilePic-container div.profile-picture span.profile-pic-bits.logic-0 {
+  background-color: black;
+}
+.additional-info .userInfo > div.profilePic-container div.profile-picture span.profile-pic-bits.logic-1 {
+  background-color: white;
+}
+.additional-info .userInfo h1.username {
+  text-align: center;
+  font-size: clamp(1.5rem, 10vw, 5rem);
+  text-transform: capitalize;
+}
+.additional-info .roomid {
+  position: fixed;
+  bottom: 1em;
+  left: 1em;
+}/*# sourceMappingURL=main.css.map */
