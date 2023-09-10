@@ -32,3 +32,13 @@ This time I will do it in few steps
 - [ ] version 1 ( in progress )
 - [ ] version 2
 - [ ] version 3
+
+## To Do
+
+- [ x ] create frontend for large screen
+- [ x ] create backend
+- [ x ] connect frontend and backend
+- [ ] edit stylings for small screen
+- [ ] display sender name beside all messages
+
+more...
