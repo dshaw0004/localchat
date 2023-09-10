@@ -3,15 +3,16 @@ import IconButton from "@mui/material/IconButton";
 import Input from "@mui/material/Input";
 import { useRef } from "react";
 
-import { useSocket } from "./socket";
+// import { useSocket } from "./socket";
 import "./css/main.css";
+import { Socket } from "socket.io-client";
 
-export default function ChatArea(props: { roomId: string }) {
+export default function ChatArea(props: { roomId: string; socket: Socket }) {
 	const input = useRef<HTMLInputElement>();
 	const output = useRef<HTMLDivElement>(null);
 	const formRef = useRef<HTMLFormElement>(null);
 
-	const socket = useSocket();
+	const socket = props.socket;
 
 	function displayMessage(message: string, className: string) {
 		if (message == undefined) return;
