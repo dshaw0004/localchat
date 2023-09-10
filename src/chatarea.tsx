@@ -3,11 +3,15 @@ import IconButton from "@mui/material/IconButton";
 import Input from "@mui/material/Input";
 import { useRef } from "react";
 
-// import { useSocket } from "./socket";
 import "./css/main.css";
 import { Socket } from "socket.io-client";
 
-export default function ChatArea(props: { roomId: string; socket: Socket }) {
+export default function ChatArea(props: {
+	roomId: string;
+	socket: Socket;
+	toggleSideBar: any;
+	sideBarState: boolean;
+}) {
 	const input = useRef<HTMLInputElement>();
 	const output = useRef<HTMLDivElement>(null);
 	const formRef = useRef<HTMLFormElement>(null);
@@ -31,8 +35,6 @@ export default function ChatArea(props: { roomId: string; socket: Socket }) {
 
 		node.classList.add(className, "messages");
 		output.current?.appendChild(node);
-		// const past_msg = output.current?.textContent;
-		// output.current.textContent = past_msg + "\n" + message;
 	}
 
 	function sendMessages(e: { preventDefault: () => void }) {
@@ -44,20 +46,23 @@ export default function ChatArea(props: { roomId: string; socket: Socket }) {
 		displayMessage(msg, "sentMessage");
 	}
 
-	// const [receivedMessage, setReceivedMessage] = useState();
-
-	// useEffect(() => {
-	// 	displayMessage(receivedMessage, "receivedMessage");
-	// }, [receivedMessage]);
-
 	socket.on("meessageBroadcast", (msg) => {
 		// console.log(msg);
 		displayMessage(msg, "receivedMessage");
 	});
 
 	return (
-		<>
-			<h3 className="messages-display">Messages</h3>
+		<section className={`chatsSection`}>
+			<h3
+				className="messages-display"
+				onClick={() => {
+					props.toggleSideBar((prev: boolean) => {
+						!prev;
+					});
+				}}
+			>
+				Messages
+			</h3>
 			<div className="messagesOutput" ref={output}></div>
 
 			<form
@@ -89,6 +94,6 @@ export default function ChatArea(props: { roomId: string; socket: Socket }) {
 					{/* <SendOutlinedIcon /> */}
 				</IconButton>
 			</form>
-		</>
+		</section>
 	);
 }

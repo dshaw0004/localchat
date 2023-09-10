@@ -10,6 +10,7 @@ import useSocket from "./socket";
 export default function App() {
 	const [roomId, setRoom] = useState<string>("");
 	const [socket, setSocket] = useState<Socket>(io(""));
+	const [sideBarOpened, setSideBarOpened] = useState<boolean>(true);
 	useEffect(() => {
 		window.navigator.geolocation.getCurrentPosition(
 			(position) => {
@@ -25,9 +26,8 @@ export default function App() {
 				const roomID = `${values.degLat}d${values.minLat}m&&${values.degLong}d${values.minLong}m`;
 				setRoom(roomID);
 				if (!socket.connected) {
-					console.log("new connection to web socket");
-
 					setSocket(useSocket(roomID));
+					console.log("new connection to web socket");
 				}
 			},
 			() => {
@@ -42,10 +42,14 @@ export default function App() {
 	}, []);
 	return (
 		<main className={`chatPage`}>
-			<LeftPart roomid={roomId} />
-			<section className={`chatsSection`}>
-				<ChatArea roomId={roomId} socket={socket} />
-			</section>
+			<LeftPart roomid={roomId} sideBarState={sideBarOpened} />
+
+			<ChatArea
+				roomId={roomId}
+				socket={socket}
+				toggleSideBar={setSideBarOpened}
+				sideBarState={sideBarOpened}
+			/>
 		</main>
 	);
 }
