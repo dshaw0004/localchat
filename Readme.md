@@ -35,9 +35,9 @@ This time I will do it in few steps
 
 ## To Do
 
-- [ x ] create frontend for large screen
-- [ x ] create backend
-- [ x ] connect frontend and backend
+- [x] create frontend for large screen
+- [x] create backend
+- [x] connect frontend and backend
 - [ ] edit stylings for small screen
 - [ ] display sender name beside all messages
 
