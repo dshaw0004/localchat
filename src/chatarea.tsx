@@ -1,16 +1,15 @@
-// import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
+import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import IconButton from "@mui/material/IconButton";
 import Input from "@mui/material/Input";
 import { useRef } from "react";
 
-import "./css/main.css";
 import { Socket } from "socket.io-client";
+import "./css/main.css";
 
 export default function ChatArea(props: {
 	roomId: string;
 	socket: Socket;
-	toggleSideBar: any;
-	sideBarState: boolean;
+	toggleSideBar: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
 	const input = useRef<HTMLInputElement>();
 	const output = useRef<HTMLDivElement>(null);
@@ -53,16 +52,20 @@ export default function ChatArea(props: {
 
 	return (
 		<section className={`chatsSection`}>
-			<h3
-				className="messages-display"
-				onClick={() => {
-					props.toggleSideBar((prev: boolean) => {
-						!prev;
-					});
-				}}
-			>
-				Messages
-			</h3>
+			<div className="navbar">
+				<i
+					onClick={() => {
+						props.toggleSideBar((prev: boolean) => {
+							console.log(prev);
+							return !prev;
+						});
+					}}
+					role="button"
+				>
+					&equiv;
+				</i>
+				<h3 className="messages-display">Messages</h3>
+			</div>
 			<div className="messagesOutput" ref={output}></div>
 
 			<form
@@ -90,8 +93,7 @@ export default function ChatArea(props: {
 					}}
 				/>
 				<IconButton type="submit">
-					send
-					{/* <SendOutlinedIcon /> */}
+					<SendOutlinedIcon />
 				</IconButton>
 			</form>
 		</section>

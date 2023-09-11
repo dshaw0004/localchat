@@ -10,7 +10,7 @@ import useSocket from "./socket";
 export default function App() {
 	const [roomId, setRoom] = useState<string>("");
 	const [socket, setSocket] = useState<Socket>(io(""));
-	const [sideBarOpened, setSideBarOpened] = useState<boolean>(true);
+	const [sideBarOpened, setSideBarOpened] = useState<boolean>(false);
 	useEffect(() => {
 		window.navigator.geolocation.getCurrentPosition(
 			(position) => {
@@ -42,13 +42,16 @@ export default function App() {
 	}, []);
 	return (
 		<main className={`chatPage`}>
-			<LeftPart roomid={roomId} sideBarState={sideBarOpened} />
+			<LeftPart
+				roomid={roomId}
+				sideBarState={sideBarOpened}
+				toggleSideBar={setSideBarOpened}
+			/>
 
 			<ChatArea
 				roomId={roomId}
 				socket={socket}
 				toggleSideBar={setSideBarOpened}
-				sideBarState={sideBarOpened}
 			/>
 		</main>
 	);
