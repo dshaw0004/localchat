@@ -1,17 +1,21 @@
-// import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
+import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import IconButton from "@mui/material/IconButton";
 import Input from "@mui/material/Input";
 import { useRef } from "react";
 
-import { useSocket } from "./socket";
+import { Socket } from "socket.io-client";
 import "./css/main.css";
 
-export default function ChatArea(props: { roomId: string }) {
+export default function ChatArea(props: {
+	roomId: string;
+	socket: Socket;
+	toggleSideBar: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
 	const input = useRef<HTMLInputElement>();
 	const output = useRef<HTMLDivElement>(null);
 	const formRef = useRef<HTMLFormElement>(null);
 
-	const socket = useSocket();
+	const socket = props.socket;
 
 	function displayMessage(message: string, className: string) {
 		if (message == undefined) return;
@@ -30,8 +34,6 @@ export default function ChatArea(props: { roomId: string }) {
 
 		node.classList.add(className, "messages");
 		output.current?.appendChild(node);
-		// const past_msg = output.current?.textContent;
-		// output.current.textContent = past_msg + "\n" + message;
 	}
 
 	function sendMessages(e: { preventDefault: () => void }) {
@@ -43,11 +45,12 @@ export default function ChatArea(props: { roomId: string }) {
 		displayMessage(msg, "sentMessage");
 	}
 
-	// const [receivedMessage, setReceivedMessage] = useState();
-
-	// useEffect(() => {
-	// 	displayMessage(receivedMessage, "receivedMessage");
-	// }, [receivedMessage]);
+	socket.on("new", (msg) => {
+		displayMessage(msg, "new");
+	});
+	socket.on("remove", (msg) => {
+		displayMessage(msg, "remove");
+	});
 
 	socket.on("meessageBroadcast", (msg) => {
 		// console.log(msg);
@@ -55,8 +58,21 @@ export default function ChatArea(props: { roomId: string }) {
 	});
 
 	return (
-		<>
-			<h3 className="messages-display">Messages</h3>
+		<section className={`chatsSection`}>
+			<div className="navbar">
+				<i
+					onClick={() => {
+						props.toggleSideBar((prev: boolean) => {
+							console.log(prev);
+							return !prev;
+						});
+					}}
+					role="button"
+				>
+					&equiv;
+				</i>
+				<h3 className="messages-display">Messages</h3>
+			</div>
 			<div className="messagesOutput" ref={output}></div>
 
 			<form
@@ -84,10 +100,9 @@ export default function ChatArea(props: { roomId: string }) {
 					}}
 				/>
 				<IconButton type="submit">
-					send
-					{/* <SendOutlinedIcon /> */}
+					<SendOutlinedIcon />
 				</IconButton>
 			</form>
-		</>
+		</section>
 	);
 }
