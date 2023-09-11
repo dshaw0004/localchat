@@ -45,6 +45,13 @@ export default function ChatArea(props: {
 		displayMessage(msg, "sentMessage");
 	}
 
+	socket.on("new", (msg) => {
+		displayMessage(msg, "new");
+	});
+	socket.on("remove", (msg) => {
+		displayMessage(msg, "remove");
+	});
+
 	socket.on("meessageBroadcast", (msg) => {
 		// console.log(msg);
 		displayMessage(msg, "receivedMessage");

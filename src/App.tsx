@@ -26,6 +26,7 @@ export default function App() {
 				const roomID = `${values.degLat}d${values.minLat}m&&${values.degLong}d${values.minLong}m`;
 				setRoom(roomID);
 				if (!socket.connected) {
+					socket.close();
 					setSocket(useSocket(roomID));
 					console.log("new connection to web socket");
 				}

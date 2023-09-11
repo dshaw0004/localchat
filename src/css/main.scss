@@ -21,12 +21,26 @@ main.chatPage {
 			padding-block: 1em;
 			overflow-y: scroll;
 			max-height: calc(100vh - 5rem);
+			scrollbar-gutter: 10px;
+			box-sizing: border-box;
 			.messages {
 				border-radius: 1em;
 				padding: 0.5ch 2ch;
 				margin-inline: 2ch;
 				font-size: larger;
 				width: fit-content;
+				&.new {
+					width: clamp(fit-content, 70%, 400px);
+					margin-inline: auto;
+					color: blue;
+					background-color: yellow;
+				}
+				&.remove {
+					width: clamp(fit-content, 70%, 400px);
+					margin-inline: auto;
+					color: yellow;
+					background-color: red;
+				}
 			}
 			.sentMessage {
 				background-color: #00d000;
