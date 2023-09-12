@@ -1,7 +1,7 @@
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import IconButton from "@mui/material/IconButton";
 import Input from "@mui/material/Input";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 import { Socket } from "socket.io-client";
 import "./css/main.css";
@@ -16,6 +16,12 @@ export default function ChatArea(props: {
 	const formRef = useRef<HTMLFormElement>(null);
 
 	const socket = props.socket;
+
+	const [lastMessage, setLastMessage] = useState({
+		msge: "",
+		ids: "",
+		time: new Date().getTime(),
+	});
 
 	function displayMessage(message: string, className: string) {
 		if (message == undefined) return;
@@ -52,9 +58,20 @@ export default function ChatArea(props: {
 		displayMessage(msg, "remove");
 	});
 
-	socket.on("meessageBroadcast", (msg) => {
-		// console.log(msg);
-		displayMessage(msg, "receivedMessage");
+	socket.on("meessageBroadcast", (msg, id) => {
+		if (
+			lastMessage.msge != msg &&
+			lastMessage.ids != id &&
+			new Date().getTime() >= lastMessage.time + 5500
+		) {
+			console.log(lastMessage);
+			setLastMessage({
+				msge: msg,
+				ids: id,
+				time: new Date().getTime(),
+			});
+			displayMessage(msg, "receivedMessage");
+		}
 	});
 
 	return (
@@ -63,7 +80,6 @@ export default function ChatArea(props: {
 				<i
 					onClick={() => {
 						props.toggleSideBar((prev: boolean) => {
-							console.log(prev);
 							return !prev;
 						});
 					}}
